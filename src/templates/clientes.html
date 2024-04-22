@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mt-5">Agregar Cliente</h2>
+            <form id="clienteForm" action="/clientes" method="POST">
+                <div class="form-group">
+                    <label for="nombres">Nombres:</label>
+                    <input type="text" class="form-control" id="nombres" name="nombres" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" class="form-control" id="usuario" name="usuario" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="clave">Clave:</label>
+                    <input type="password" class="form-control" id="clave" name="clave" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <select class="form-control" id="estado" name="estado" required>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="rol">Rol:</label>
+                    <select class="form-control" id="rol" name="rol" required>
+                        <option value="cliente">Cliente</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h2 class="mt-5">Clientes</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Usuario</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in clientes %}
+                        <tr>
+                            <td>{{c.1}}</td>
+                            <td>{{c.2}}</td>
+                            <td>{{c.3}}</td>
+                            <td>{{c.6}}</td>
+                            <td>{{c.5}}</td>
+                            <td><a href="/deleteCliente/{{c.0}}" class="btn btn-danger">Eliminar</a></td>
+                            <td><a href="/EditarCliente/{{c.0}}" class="btn btn-info">Editar</a></td>
+                        </tr>
+                        {% endfor %}
+                        <!-- Aquí irían los demás clientes -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

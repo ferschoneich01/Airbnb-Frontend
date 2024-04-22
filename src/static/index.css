@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://www.soydemac.com/wp-content/uploads/2021/12/playa-fondo-1536x864.jpg.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px); /* Ajusta el valor de blur según desees */
+    z-index: -1; /* Para que esté detrás del contenido */
+}
+
+.container{
+    position: relative; /* Ajusta el z-index para que esté encima del fondo */
+    z-index: 1;
+    padding: 20px;
+}

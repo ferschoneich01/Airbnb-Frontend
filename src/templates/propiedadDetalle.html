@@ -1,0 +1,101 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Ubicación</h2>
+            <p><strong>País:</strong> {{propiedad.1}}</p>
+            <p><strong>Provincia/Estado:</strong> {{propiedad.2}}</p>
+            <p><strong>Dirección:</strong> {{propiedad.3}}</p>
+            <p><strong>Detalle:</strong> {{propiedad.4}}</p>
+
+            <h2>Características</h2>
+            <ul>
+                <li>Piscina: {{amenidad.0}}</li>
+                <li>Jacuzzi: {{amenidad.1}}</li>
+                <li>Wifi: {{amenidad.2}}</li>
+                <li>Estacionamiento/Garaje: {{amenidad.3}}</li>
+                <li>Aire Acondicionado: {{amenidad.4}}</li>
+                <li>Calefacción: {{amenidad.5}}</li>
+                <li>Agua: {{amenidad.6}}</li>
+                <li>TV por Cable: {{amenidad.7}}</li>
+                <li>Lavandería: {{amenidad.8}}</li>
+                <li>Gimnasio: {{amenidad.9}}</li>
+                <li>Sauna: {{amenidad.10}}</li>
+                <li>Cocina Totalmente Equipada: {{amenidad.11}}</li>
+                <li>Vista Panorámica: {{amenidad.12}}</li>
+                <li>Acceso Privado a la Playa: {{amenidad.13}}</li>
+                <li>Servicio de Limpieza: {{amenidad.14}}</li>
+                <li>Conserjería 24 Horas: {{amenidad.15}}</li>
+                <li>Restaurante/Bar en el Establecimiento: {{amenidad.16}}</li>
+                <li>Servicio de Habitación: {{amenidad.17}}</li>
+                <li>Actividades Recreacionales:</li>
+                <ul>
+                    <li>Canchas: {{amenidad.18}}</li>
+                    <li>Campos Deportivos: {{amenidad.19}}</li>
+                    <li>Salón de Juegos: {{amenidad.20}}</li>
+                </ul>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h2>Propiedad</h2>
+            <p><strong>Propietario:</strong> {{propiedad.5}}</p>
+            <p><strong>Descripción:</strong> {{propiedad.6}}</p>
+            <p><strong>Capacidad:</strong> {{propiedad.7}}</p>
+            <p><strong>Precio por noche:</strong> {{propiedad.8}}</p>
+            <p><strong>Cantidad de Baños:</strong> {{propiedad.9}}</p>
+            <img src="{{propiedad.10}}" alt="Imagen de la propiedad" class="img-fluid">
+
+            <button type="button" class="btn btn-primary m-lg-2" data-toggle="modal" data-target="#reservacionModal">
+                Iniciar Reservacion
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Ventana Modal -->
+<div class="modal fade" id="reservacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reservación</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formReserva" action="/reservar/{{propiedad.0}}" method="post">
+                    <div class="form-group">
+                        <label for="fecha_entrada">Fecha de Entrada:</label>
+                        <input name="fecha_entrada" type="date" class="form-control" id="fecha_entrada" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_salida">Fecha de Salida:</label>
+                        <input name="fecha_salida" type="date" class="form-control" id="fecha_salida" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adultos">Adultos:</label>
+                        <input type="number" class="form-control" id="adultos" min="0" value="0" name="adultos"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ninos">Niños:</label>
+                        <input type="number" class="form-control" id="ninos" min="0" value="0" name="ninos" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bebes">Bebés:</label>
+                        <input type="number" class="form-control" id="bebes" min="0" value="0" name="bebes" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mascotas">Mascotas:</label>
+                        <input type="number" class="form-control" id="mascotas" min="0" value="0" name="mascotas"
+                            required>
+                    </div>
+                    <button type="button" id="btnGuardar" onclick="mensaje()"
+                        class="btn btn-primary btn-block m-lg-2">Reservar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

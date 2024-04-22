@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Reservacion:</h2>
+            <p><strong>Número de reservacion:</strong> {{propiedad.1}}</p>
+            <p><strong>Fecha de ingreso:</strong> {{propiedad.2}}</p>
+            <p><strong>Fecha de salida:</strong> {{propiedad.3}}</p>
+            <p><strong>Estado:</strong> {{propiedad.4}}</p>
+        </div>
+        <div class="col-md-6">
+            <h2>Ubicación</h2>
+            <p><strong>País:</strong> {{propiedad.1}}</p>
+            <p><strong>Provincia/Estado:</strong> {{propiedad.2}}</p>
+            <p><strong>Dirección:</strong> {{propiedad.3}}</p>
+            <p><strong>Detalle:</strong> {{propiedad.4}}</p>
+
+            <h2>Características</h2>
+            <ul>
+                <li>Piscina: true</li>
+                <li>Jacuzzi: false</li>
+                <li>Wifi: true</li>
+                <li>Estacionamiento/Garaje: true</li>
+                <li>Aire Acondicionado: false</li>
+                <li>Calefacción: false</li>
+                <li>Agua: Caliente</li>
+                <li>TV por Cable: true</li>
+                <li>Lavandería: true</li>
+                <li>Gimnasio: false</li>
+                <li>Sauna: false</li>
+                <li>Cocina Totalmente Equipada: true</li>
+                <li>Vista Panorámica: true</li>
+                <li>Acceso Privado a la Playa: true</li>
+                <li>Servicio de Limpieza: true</li>
+                <li>Conserjería 24 Horas: false</li>
+                <li>Restaurante/Bar en el Establecimiento: false</li>
+                <li>Servicio de Habitación: true</li>
+                <li>Actividades Recreacionales:</li>
+                <ul>
+                    <li>Canchas: false</li>
+                    <li>Campos Deportivos: true</li>
+                    <li>Salón de Juegos: false</li>
+                </ul>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h2>Propiedad</h2>
+            <p><strong>Propietario:</strong> {{propiedad.5}}</p>
+            <p><strong>Descripción:</strong> {{propiedad.6}}</p>
+            <p><strong>Capacidad:</strong> {{propiedad.7}}</p>
+            <p><strong>Precio por noche:</strong> {{propiedad.8}}</p>
+            <p><strong>Cantidad de Baños:</strong> {{propiedad.9}}</p>
+            <img src="{{propiedad.10}}" alt="Imagen de la propiedad" class="img-fluid">
+        </div>
+    </div>
+</div>
+{% endblock %}

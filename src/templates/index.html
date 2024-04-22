@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block body %}
+<link rel="stylesheet" href="../static/index.css">
+<div class="container">
+    <h1 class="mt-5 mb-4 text-light">Catálogo de Propiedades</h1>
+    <div class="row row-cols-3">
+        <!-- Ejemplo de una propiedad -->
+        {% for p in propiedades %}
+        <div class="col">
+            <div class="card">
+                <img src="{{p.7}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{p.3}}</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Ubicación:</li>
+                        <li class="list-group-item">Pais:{{p.8}}</li>
+                        <li class="list-group-item">Ciudad:{{p.9}}</li>
+                        <li class="list-group-item">Direccion:{{p.10}}</li>
+                        <li class="list-group-item">Precio por noche: {{p.5}}</li>
+                    </ul>
+                </div>
+                <a class="btn btn-info" href="/propiedadesDetalle/{{p.0}}">Ver más detalles</a>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- Agrega más cartas para más propiedades aquí -->
+    </div>
+</div>
+
+{% endblock %}

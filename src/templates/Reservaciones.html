@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1 class="mt-5 mb-4">Reservaciones</h1>
+<div class="row">
+    {% for r in reservaciones %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Número reserva: {{r.0}}
+                </h5>
+                <p class="card-text">Propiedad: {{r.2}}
+                </p>
+                <p class="card-text">Fecha de ingreso: {{r.3}}
+                </p>
+                <p class="card-text">Fecha de salida: {{r.4}}
+                </p>
+                <p class="card-text">Huespedes: {{r.5}}
+                </p>
+                <p class="card-text">Estado de reserva: {{r.6}}
+                </p>
+                <a href="/detalleReserva/{{r.0}}" class="btn btn-outline-primary">ver reserva</a>
+                <a href="/deleteReserva/{{r.0}}" class="btn btn-outline-danger">Cancelar</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% endblock %}

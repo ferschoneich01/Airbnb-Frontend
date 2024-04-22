@@ -1,0 +1,31 @@
+{% extends 'layout.html'%}
+{% block body %}
+<div class="container-md">
+    <h1>Reservaciones</h1>
+    <div class="scroll-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Numero de reserva</th>
+                    <th>Fecha de Ingreso</th>
+                    <th>Fecha de Salida</th>
+                    <th>Estado de Reserva</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in reservas %}
+                <tr>
+                    <td>{{r.0}}</td>
+                    <td>{{r.1}}</td>
+                    <td>{{r.2}}</td>
+                    <td>{{r.4}}</td>
+                    <td><a class="btn btn-info" href="/detalleReserva/{{r.0}}">ver reserva</a></td>
+                </tr>
+                {% endfor %}
+                <!-- Puedes agregar más filas aquí -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
