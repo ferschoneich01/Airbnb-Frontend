@@ -20,3 +20,8 @@
     max-height: 400px; /* Altura máxima del scroll */
     overflow-y: auto; /* Habilita el scroll vertical */
 }
+
+.custom-modal-width {
+    max-width: 800px; /* Ancho personalizado */
+    width: 90%; /* Ancho máximo */
+}

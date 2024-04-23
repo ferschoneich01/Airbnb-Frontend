@@ -35,9 +35,8 @@ def index():
                 for prop in propiedades:
                             ubicacionData = requests.get(api_url+'ubicacionRoutes/'+prop["ubicacion_id"])
                             ubicacion=ubicacionData.json()
-                            print(ubicacion)
                             ubicacion=ubicacion["data"]
-                            print(ubicacion)
+                          
                             lista_propiedades.append([
                                 prop["_id"],
                                 prop["ubicacion_id"],
@@ -297,8 +296,12 @@ def propiedadesDetalle(id):
 @app.route("/reservar/<id>", methods=["POST","GET"])
 @login_required
 def reservar(id):
-        
-        data = {"cliente" :session["id_cliente"],
+        dataprop = requests.get(api_url+'propiedadesRoutes/'+id)
+        dataJSON=dataprop.json()
+        propiedad = dataJSON["data"]
+
+        data = {
+        "cliente" :session["id_cliente"],
         "propiedades" : id,
         "fecha_ingreso" : request.form.get("fecha_entrada"),
         "fecha_salida" : request.form.get("fecha_salida"),
@@ -306,19 +309,81 @@ def reservar(id):
         "ninos" : request.form.get("ninos"),
         "bebes" : request.form.get("bebes"),
         "mascotas" : request.form.get("mascotas"),
-        "estado_reserva" : "confirmada"
+        "estado_reserva" : "confirmada",
+        "monto_pago":propiedad["precio_por_noche"],
+        "numero_tarjeta":request.form.get("card-number")
         }
         
         #consulta api
         data = requests.post(api_url+'reservacionRoutes/',json=data)
         return redirect("/misReservaciones")
 
+@app.route("/ReservaDetalle/<id>", methods=["GET","POST"])
+@login_required
+def resDetalle(id):
+    reservacionData = requests.get(api_url+'reservacionRoutes/'+id)
+    reservacion = reservacionData.json()
+    reservacion = reservacion["data"]
+
+    #cliente
+    clienteData = requests.get(api_url+'clientesRoutes/cliente/'+reservacion["cliente"]["id"])
+    cliente = clienteData.json()
+    cliente = cliente["data"]
+
+    reserva = [
+         reservacion["_id"],
+         cliente["nombres"]+" "+cliente["apellidos"],
+         reservacion["fecha_ingreso"],
+         reservacion["fecha_salida"],
+         limpiarString(str(reservacion["numero_huspedes"]))
+
+    ]
+    
+    data = requests.get(api_url+'propiedadesRoutes/'+reservacion["propiedades"]["id"])
+    if data.status_code == 200:
+            dataJSON=data.json()
+            propiedades = dataJSON["data"]
+            ubicacionData = requests.get(api_url+'ubicacionRoutes/'+propiedades["ubicacion_id"])
+            ubicacion=ubicacionData.json()
+            ubicacion=ubicacion["data"]
+            objetoPropiedad = [
+                            propiedades["_id"],
+                            ubicacion["pais"],
+                            ubicacion["provincia_estado"],
+                            ubicacion["direccion"],
+                            ubicacion["detalle"],
+                            propiedades["propietarios"],
+                            propiedades["descripcion"],
+                            propiedades["capacidad"],
+                            propiedades["precio_por_noche"],
+                            propiedades["cantidad_banos"],
+                            propiedades["img"]
+            ]
+
+            #pagos
+            pagoData = requests.get(api_url+'pagosRoutes/'+id)
+            pago = pagoData.json()
+            pago = pago["data"]
+            numeroTrj = pago["numero_tarjeta"]
+
+            pagoObj = [
+                pago["_id"],
+                pago["metodo_pago"],
+                pago["monto_pagado"],
+                pago["estado_pago"],
+                pago["fecha_pago"],
+                numeroTrj[-4:]
+            ]
+                
+            return render_template("detalleReservaAdmin.html", propiedad=objetoPropiedad,reserva=reserva, pago=pagoObj)
+    else:
+        return redirect("/")
+
 @app.route("/reservaDetalle/<id>", methods=["GET","POST"])
 @login_required
 def reservaDetalle(id):
     reservacionData = requests.get(api_url+'reservacionRoutes/'+id)
     reservacion = reservacionData.json()
-    print(reservacion)
     reservacion = reservacion["data"]
 
     reserva = [
@@ -343,24 +408,53 @@ def reservaDetalle(id):
                             ubicacion["provincia_estado"],
                             ubicacion["direccion"],
                             ubicacion["detalle"],
-                            propiedades["propietarios"][0],
+                            propiedades["propietarios"],
                             propiedades["descripcion"],
                             propiedades["capacidad"],
                             propiedades["precio_por_noche"],
                             propiedades["cantidad_banos"],
                             propiedades["img"]
             ]
+
+            #pagos
+            pagoData = requests.get(api_url+'pagosRoutes/'+id)
+            pago = pagoData.json()
+            pago = pago["data"]
+            numeroTrj = pago["numero_tarjeta"]
+
+            pagoObj = [
+                pago["_id"],
+                pago["metodo_pago"],
+                pago["monto_pagado"],
+                pago["estado_pago"],
+                pago["fecha_pago"],
+                numeroTrj[-4:]
+            ]
                 
-            return render_template("detalleReserva.html", propiedad=objetoPropiedad,reserva=reserva)
+            return render_template("detalleReserva.html", propiedad=objetoPropiedad,reserva=reserva, pago=pagoObj)
     else:
         return redirect("/")
     
 @app.route("/deleteReserva/<id>", methods=["DELETE","GET"])
 @login_required
 def deleteReserva(id):
-     res = requests.delete(api_url+'reservacionRoutes/'+id)
-     print(res)       
+     data = {"id":id}
+     res = requests.put(api_url+'reservacionRoutes/'+id, json=data)    
      return redirect("/")
+
+@app.route("/deleteCliente/<id>", methods=["DELETE","GET"])
+@login_required
+def deleteCliente(id):
+     data = {"id":id}
+     res = requests.put(api_url+'clientesRoutes/'+id, json=data)   
+     return redirect("/clientes")
+
+@app.route("/deletePropiedad/<id>", methods=["DELETE","GET"])
+@login_required
+def deletePropiedad(id):
+     data = {"id":id}
+     res = requests.delete(api_url+'propiedadesRoutes/'+id)   
+     return redirect("/propiedades")
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -384,7 +478,7 @@ def login():
             #jsonserializable
             user=data.json()
             user=user["data"]
-            print(user)
+
             # Ensure username exists and password is correct
             if len(user) != 1 and (user['clave'] == password) and (user['estado'] == 1):
                 session["username"] = username
@@ -401,7 +495,6 @@ def login():
 @app.route("/registrarme", methods=["POST", "GET"])
 def registrarme():
     if request.method == "POST":
-        print("entro")
         data = {"nombres" : request.form.get("nombres"),
         "apellidos" : request.form.get("apellidos"),
         "usuario" : request.form.get("usuario"),

@@ -55,7 +55,7 @@
 <!-- Ventana Modal -->
 <div class="modal fade" id="reservacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog custom-modal-width" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Reservación</h5>
@@ -64,32 +64,59 @@
             </div>
             <div class="modal-body">
                 <form id="formReserva" action="/reservar/{{propiedad.0}}" method="post">
-                    <div class="form-group">
-                        <label for="fecha_entrada">Fecha de Entrada:</label>
-                        <input name="fecha_entrada" type="date" class="form-control" id="fecha_entrada" required>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fecha_entrada">Fecha de Entrada:</label>
+                                <input name="fecha_entrada" type="date" class="form-control" id="fecha_entrada"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha_salida">Fecha de Salida:</label>
+                                <input name="fecha_salida" type="date" class="form-control" id="fecha_salida" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="adultos">Adultos:</label>
+                                <input type="number" class="form-control" id="adultos" min="0" value="0" name="adultos"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ninos">Niños:</label>
+                                <input type="number" class="form-control" id="ninos" min="0" value="0" name="ninos"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bebes">Bebés:</label>
+                                <input type="number" class="form-control" id="bebes" min="0" value="0" name="bebes"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="mascotas">Mascotas:</label>
+                                <input type="number" class="form-control" id="mascotas" min="0" value="0"
+                                    name="mascotas" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="card-number">Número de tarjeta:</label>
+                                <input type="text" id="card-number" name="card-number" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="card-holder">Titular de la tarjeta:</label>
+                                <input type="text" id="card-holder" name="card-holder" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expiry-date">Fecha de expiración:</label>
+                                <input type="text" id="expiry-date" name="expiry-date" class="form-control"
+                                    placeholder="MM/AA" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV:</label>
+                                <input type="text" id="cvv" name="cvv" class="form-control" maxlength="4" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="fecha_salida">Fecha de Salida:</label>
-                        <input name="fecha_salida" type="date" class="form-control" id="fecha_salida" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="adultos">Adultos:</label>
-                        <input type="number" class="form-control" id="adultos" min="0" value="0" name="adultos"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ninos">Niños:</label>
-                        <input type="number" class="form-control" id="ninos" min="0" value="0" name="ninos" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bebes">Bebés:</label>
-                        <input type="number" class="form-control" id="bebes" min="0" value="0" name="bebes" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="mascotas">Mascotas:</label>
-                        <input type="number" class="form-control" id="mascotas" min="0" value="0" name="mascotas"
-                            required>
-                    </div>
+
                     <button type="button" id="btnGuardar" onclick="mensaje()"
                         class="btn btn-primary btn-block m-lg-2">Reservar</button>
                 </form>
