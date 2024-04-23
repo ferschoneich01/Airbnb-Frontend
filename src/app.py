@@ -243,9 +243,19 @@ def reservar(id):
 def reservaDetalle(id):
     reservacionData = requests.get(api_url+'reservacionRoutes/'+id)
     reservacion = reservacionData.json()
+    print(reservacion)
     reservacion = reservacion["data"]
+
+    reserva = [
+         reservacion["_id"],
+         reservacion["cliente"]["id"],
+         reservacion["fecha_ingreso"],
+         reservacion["fecha_salida"],
+         limpiarString(str(reservacion["numero_huspedes"]))
+
+    ]
     
-    data = requests.get(api_url+'propiedadesRoutes/'+id)
+    data = requests.get(api_url+'propiedadesRoutes/'+reservacion["propiedades"]["id"])
     if data.status_code == 200:
             dataJSON=data.json()
             propiedades = dataJSON["data"]
@@ -266,7 +276,7 @@ def reservaDetalle(id):
                             propiedades["img"]
             ]
                 
-            return render_template("detalleReserva.html", propiedad=objetoPropiedad)
+            return render_template("detalleReserva.html", propiedad=objetoPropiedad,reserva=reserva)
     else:
         return redirect("/")
     
@@ -313,6 +323,28 @@ def login():
     else:
         return render_template("login.html")
     
+@app.route("/registrarme", methods=["POST", "GET"])
+def registrarme():
+    if request.method == "POST":
+        print("entro")
+        data = {"nombres" : request.form.get("nombres"),
+        "apellidos" : request.form.get("apellidos"),
+        "usuario" : request.form.get("usuario"),
+        "clave" : request.form.get("clave"),
+        "estado" : 1,
+        "rol" : "cliente"}
+        
+        #consulta api
+        data = requests.post(api_url+'clientesRoutes/',json=data)
+
+        
+        if data.status_code != 200:
+            flash("error")
+            return redirect("/login")
+        else:
+            flash('¡Cuenta creada exitosamente!')
+    return render_template("registroUsuario.html")
+
 @app.route("/logout")
 @login_required
 def logout():
