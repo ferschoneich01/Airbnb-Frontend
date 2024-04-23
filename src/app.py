@@ -16,9 +16,6 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Set up database
-carListdataJSONs = []
-
 #api url
 #api_url='http://127.0.0.1:5000/api'
 api_url='http://localhost:3030/api/v1/'
@@ -38,8 +35,9 @@ def index():
                 for prop in propiedades:
                             ubicacionData = requests.get(api_url+'ubicacionRoutes/'+prop["ubicacion_id"])
                             ubicacion=ubicacionData.json()
+                            print(ubicacion)
                             ubicacion=ubicacion["data"]
-        
+                            print(ubicacion)
                             lista_propiedades.append([
                                 prop["_id"],
                                 prop["ubicacion_id"],
@@ -91,7 +89,6 @@ def misReservaciones():
     if data.status_code == 200:
             dataJSON=data.json()
             reservas = dataJSON["data"]
-            print(reservas)
 
             for res in reservas:
                 lista_reservas.append([res["_id"],res["fecha_ingreso"],
@@ -141,25 +138,103 @@ def clientes():
 @app.route("/propiedades", methods=["GET","POST"])
 @login_required
 def propiedades():
-    lista_propiedades = []
-    data = requests.get(api_url+'propiedadesRoutes/')
-    if data.status_code == 200:
-            dataJSON=data.json()
-            propiedades = dataJSON["data"]
 
-            for prop in propiedades:
-                        lista_propiedades.append([
-                            prop["_id"],
-                            prop["ubicacion_id"],
-                            prop["propietarios"][0],
-                            prop["descripcion"],
-                            prop["capacidad"],
-                            prop["precio_por_noche"],
-                            prop["cantidad_banos"],
-                            prop["img"]
-                        ])
-                
-    return render_template("propiedades.html", propiedades=lista_propiedades)
+    if request.method == "POST":
+        #ubicacion
+        UbicacionData = {
+            "pais" : request.form.get("pais"),
+            "provincia_estado" : request.form.get("provincia"),
+            "direccion" : request.form.get("direccion"),
+            "detalle" : request.form.get("detalle"),
+        }
+
+        Ubicacion = requests.post(api_url+'ubicacionRoutes/',json=UbicacionData)
+        Ubicacion=Ubicacion.json()
+        Ubicacion=Ubicacion["data"]
+
+        #amenidad
+        amenidadObj = {
+            "piscina": request.form.get("piscina"),
+            "jacuzzi": request.form.get("jacuzzi"),
+            "wifi": request.form.get("wifi"),
+            "estacionamiento_garaje": request.form.get("estacionamiento_garaje"),
+            "aire_acondicionado": request.form.get("aire_acondicionado"),
+            "calefaccion": request.form.get("calefaccion"),
+            "agua": request.form.get("agua"),
+            "tv_por_cable": request.form.get("tv_por_cable"),
+            "lavanderia": request.form.get("lavanderia"),
+            "gimnasio": request.form.get("gimnasio"),
+            "sauna": request.form.get("sauna"),
+            "cocina_totalmente_equipada": request.form.get("cocina_totalmente_equipada"),
+            "vista_panoramica": request.form.get("vista_panoramica"),
+            "acceso_privado_playa": request.form.get("acceso_privado_playa"),
+            "servicio_limpieza": request.form.get("servicio_limpieza"),
+            "consejeria_24_horas": request.form.get("consejeria_24_horas"),
+            "restaurante_bar_establecimiento": request.form.get("restaurante_bar_establecimiento"),
+            "servicio_habitacion": request.form.get("servicio_habitacion"),
+            "canchas": request.form.get("canchas"),
+            "campos_deportivos": request.form.get("campos_deportivos"),
+            "salon_de_juegos": request.form.get("salon_de_juegos")
+            
+        }
+
+        amenidadData = requests.post(api_url+'amenidadesRoutes/',json=amenidadObj)
+        amenidades=amenidadData.json()
+        amenidades=amenidades["data"]
+
+
+        #propiedad
+        data = {
+            "ubicacion_id" : Ubicacion,
+            "propietarios" : request.form.get("propietario"),
+            "descripcion" : request.form.get("descripcion"),
+            "capacidad" : request.form.get("capacidad"),
+            "precio_por_noche" : request.form.get("precio"),
+            "cantidad_banos" : request.form.get("banos"),
+            "img" : request.form.get("img"),
+            "amenidad_id": amenidades
+        }
+        
+        #consulta api
+        data = requests.post(api_url+'propiedadesRoutes/',json=data)
+
+        return redirect("/propiedades")
+    else:     
+        lista_propiedades = []
+        lista_ubicaciones = []
+
+        data = requests.get(api_url+'propiedadesRoutes/')
+
+        if data.status_code == 200:
+                dataJSON=data.json()
+                propiedades = dataJSON["data"]
+                #ubicaciones
+                ubicacionData = requests.get(api_url+'ubicacionRoutes/')
+                ubicaciones=ubicacionData.json()
+                ubicaciones=ubicaciones["data"]
+
+                for u in ubicaciones:
+                            lista_ubicaciones.append([
+                                u["_id"],
+                                u["pais"],
+                                u["provincia_estado"],
+                                u["direccion"],
+                                u["detalle"]
+                            ])
+
+                for prop in propiedades:
+                            lista_propiedades.append([
+                                prop["_id"],
+                                prop["ubicacion_id"],
+                                prop["propietarios"][0],
+                                prop["descripcion"],
+                                prop["capacidad"],
+                                prop["precio_por_noche"],
+                                prop["cantidad_banos"],
+                                prop["img"]
+                            ])
+                    
+        return render_template("propiedades.html", propiedades=lista_propiedades,ubicaciones=lista_ubicaciones)
 
 @app.route("/propiedadesDetalle/<id>", methods=["GET","POST"])
 @login_required

@@ -6,13 +6,95 @@
             <h2 class="mt-5">Agregar Propiedad</h2>
             <form id="propiedadForm" action="/propiedades" method="POST">
                 <div class="form-group">
-                    <label for="ubicacion">Ubicación:</label>
-                    <select class="form-control" id="ubicacion" name="ubicacion" required>
-                        <option value="ubicacion456">Playa Manuel Antonio</option>
-                        <!-- Aquí podrías llenar las opciones dinámicamente desde el servidor -->
+                    <label for="pais">Pais:</label>
+                    <select class="form-control" id="pais" name="pais" required>
+                        <option value="Belize">Belice</option>
+                        <option value="Costa Rica">Costa Rica</option>
+                        <option value="El Salvador">El Salvador</option>
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Honduras">Honduras</option>
+                        <option value="Nicaragua">Nicaragua</option>
+                        <option value="Panama">Panamá</option>
+
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="provincia">Provincia/Estado:</label>
+                    <select class="form-control" id="provincia" name="provincia" required>
+                        <!-- Belice -->
+                        <option value="Belize District">Distrito de Belice</option>
+                        <option value="Cayo District">Distrito de Cayo</option>
+                        <option value="Corozal District">Distrito de Corozal</option>
+                        <option value="Orange Walk District">Distrito de Orange Walk</option>
+                        <option value="Stann Creek District">Distrito de Stann Creek</option>
+                        <option value="Toledo District">Distrito de Toledo</option>
 
+                        <!-- Costa Rica -->
+                        <option value="San Jose">San José</option>
+                        <option value="Alajuela">Alajuela</option>
+                        <option value="Cartago">Cartago</option>
+                        <option value="Heredia">Heredia</option>
+                        <option value="Guanacaste">Guanacaste</option>
+                        <option value="Puntarenas">Puntarenas</option>
+                        <option value="Limón">Limón</option>
+
+                        <!-- El Salvador -->
+                        <option value="Ahuachapán">Ahuachapán</option>
+                        <option value="Santa Ana">Santa Ana</option>
+                        <option value="Sonsonate">Sonsonate</option>
+                        <option value="Usulután">Usulután</option>
+                        <option value="San Miguel">San Miguel</option>
+                        <option value="Morazán">Morazán</option>
+                        <option value="La Unión">La Unión</option>
+
+                        <!-- Guatemala -->
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Quetzaltenango">Quetzaltenango</option>
+                        <option value="Escuintla">Escuintla</option>
+                        <option value="San Marcos">San Marcos</option>
+                        <option value="Huehuetenango">Huehuetenango</option>
+                        <option value="Peten">Petén</option>
+                        <option value="Suchitepequez">Suchitepéquez</option>
+
+                        <!-- Honduras -->
+                        <option value="Atlántida">Atlántida</option>
+                        <option value="Choluteca">Choluteca</option>
+                        <option value="Colon">Colón</option>
+                        <option value="Comayagua">Comayagua</option>
+                        <option value="Copán">Copán</option>
+                        <option value="Cortés">Cortés</option>
+                        <option value="El Paraíso">El Paraíso</option>
+
+                        <!-- Nicaragua -->
+                        <option value="Boaco">Boaco</option>
+                        <option value="Carazo">Carazo</option>
+                        <option value="Chinandega">Chinandega</option>
+                        <option value="Chontales">Chontales</option>
+                        <option value="Estelí">Estelí</option>
+                        <option value="Granada">Granada</option>
+                        <option value="Jinotega">Jinotega</option>
+
+                        <!-- Panamá -->
+                        <option value="Bocas del Toro">Bocas del Toro</option>
+                        <option value="Chiriquí">Chiriquí</option>
+                        <option value="Coclé">Coclé</option>
+                        <option value="Colón">Colón</option>
+                        <option value="Darién">Darién</option>
+                        <option value="Herrera">Herrera</option>
+                        <option value="Los Santos">Los Santos</option>
+                        <option value="Panamá">Panamá</option>
+                        <option value="Veraguas">Veraguas</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Direccion:</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" required>
+                </div>
+                <div class="form-group">
+                    <label for="detalle">Detalle Ubicacion:</label>
+                    <input type="text" class="form-control" id="detalle" name="detalle" required>
+                </div>
                 <div class="form-group">
                     <label for="propietario">Propietario:</label>
                     <input type="text" class="form-control" id="propietario" name="propietario" required>
@@ -38,8 +120,163 @@
                     <input type="number" class="form-control" id="banos" name="banos" required>
                 </div>
 
-                <!-- Aquí podrías agregar más campos para las amenidades -->
+                <div class="form-group">
+                    <label for="img">Foto:</label>
+                    <input type="text" class="form-control" id="img" name="img" required>
+                </div>
+                <br>
+                <ul>
+                    <li>
+                        <label for="piscina">Piscina:</label>
+                        <select id="piscina" name="piscina">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="jacuzzi">Jacuzzi:</label>
+                        <select id="jacuzzi" name="jacuzzi">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="wifi">Wifi:</label>
+                        <select id="wifi" name="wifi">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="estacionamiento_garaje">Estacionamiento/Garaje:</label>
+                        <select id="estacionamiento_garaje" name="estacionamiento_garaje">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="aire_acondicionado">Aire acondicionado:</label>
+                        <select id="aire_acondicionado" name="aire_acondicionado">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="calefaccion">Calefacción:</label>
+                        <select id="calefaccion" name="calefaccion">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="agua">Agua:</label>
+                        <select id="agua" name="agua">
+                            <option value="caliente">Caliente</option>
+                            <option value="fria">Fría</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="tv_por_cable">TV por cable:</label>
+                        <select id="tv_por_cable" name="tv_por_cable">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="lavanderia">Lavandería:</label>
+                        <select id="lavanderia" name="lavanderia">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="gimnasio">Gimnasio:</label>
+                        <select id="gimnasio" name="gimnasio">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="sauna">Sauna:</label>
+                        <select id="sauna" name="sauna">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="cocina_totalmente_equipada">Cocina totalmente equipada:</label>
+                        <select id="cocina_totalmente_equipada" name="cocina_totalmente_equipada">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="vista_panoramica">Vista panorámica:</label>
+                        <select id="vista_panoramica" name="vista_panoramica">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="acceso_privado_playa">Acceso privado a la playa:</label>
+                        <select id="acceso_privado_playa" name="acceso_privado_playa">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="servicio_limpieza">Servicio de limpieza:</label>
+                        <select id="servicio_limpieza" name="servicio_limpieza">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="consejeria_24_horas">Consejería 24 horas:</label>
+                        <select id="consejeria_24_horas" name="consejeria_24_horas">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="restaurante_bar_establecimiento">Restaurante/Bar en el establecimiento:</label>
+                        <select id="restaurante_bar_establecimiento" name="restaurante_bar_establecimiento">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="servicio_habitacion">Servicio a la habitación:</label>
+                        <select id="servicio_habitacion" name="servicio_habitacion">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="canchas">Canchas deportivas:</label>
+                        <select id="canchas" name="canchas">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="campos_deportivos">Campos deportivos:</label>
+                        <select id="campos_deportivos" name="campos_deportivos">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="salon_de_juegos">Salón de juegos:</label>
+                        <select id="salon_de_juegos" name="salon_de_juegos">
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </li>
+                </ul>
 
+                <!-- Aquí podrías agregar más campos para las amenidades -->
+                <br>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
         </div>
